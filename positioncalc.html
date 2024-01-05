@@ -3,48 +3,103 @@
 <html>
 <head>
     <title>Risk Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            border: none;
+            border-radius: 0; /* Square input boxes and button */
+            -webkit-appearance: none; /* Removes increment/decrement arrows */
+            -moz-appearance: none;
+            appearance: none;
+        }
+        input {
+            width: 60%; /* Width of input boxes */
+        }
+        button {
+            background-color: #555;
+            color: white;
+            cursor: pointer;
+            width: 100%; /* Full width button */
+        }
+        button:hover {
+            background-color: #777;
+        }
+    </style>
     <script>
         function calculateRisk() {
-            // Getting values from the fields
             var stopLoss = document.getElementById('stopLoss').value;
             var accountBalance = document.getElementById('accountBalance').value;
             var riskPercentage = document.getElementById('risk').value;
             var pipValue = document.getElementById('pipValue').value;
             var contractSize = document.getElementById('contractSize').value;
 
-            // Calculating Money at Risk and Lots
             var moneyAtRisk = accountBalance * (riskPercentage / 100);
             var lots = moneyAtRisk / (stopLoss * pipValue);
+            var units = contractSize * lots;
 
-            // Displaying the results
             document.getElementById('moneyAtRisk').innerHTML = 'Money at Risk: ' + moneyAtRisk.toFixed(2);
             document.getElementById('lots').innerHTML = 'Lots: ' + lots.toFixed(2);
+            document.getElementById('units').innerHTML = 'Units: ' + units.toFixed(2);
         }
     </script>
 </head>
 <body>
-    <h1>Risk Calculator</h1>
+    <div class="container">
+        <h1>Risk Calculator</h1>
 
-    <label for="stopLoss">Stop Loss:</label>
-    <input type="number" id="stopLoss" required><br><br>
+        <div class="form-group">
+            <label for="stopLoss">Stop Loss:</label>
+            <input type="number" id="stopLoss" required>
+        </div>
 
-    <label for="accountBalance">Account Balance:</label>
-    <input type="number" id="accountBalance" required><br><br>
+        <div class="form-group">
+            <label for="accountBalance">Account Balance:</label>
+            <input type="number" id="accountBalance" required>
+        </div>
 
-    <label for="risk">Risk (%):</label>
-    <input type="number" id="risk" value="3" required><br><br>
+        <div class="form-group">
+            <label for="risk">Risk (%):</label>
+            <input type="number" id="risk" value="3" required>
+        </div>
 
-    <label for="pipValue">Pip Value:</label>
-    <input type="number" id="pipValue" value="10" required><br><br>
+        <div class="form-group">
+            <label for="pipValue">Pip Value:</label>
+            <input type="number" id="pipValue" value="10" required>
+        </div>
 
-    <label for="contractSize">Contract Size:</label>
-    <input type="number" id="contractSize" value="100000" required><br><br>
+        <div class="form-group">
+            <label for="contractSize">Contract Size:</label>
+            <input type="number" id="contractSize" value="100000" required>
+        </div>
 
-    <button onclick="calculateRisk()">Calculate</button>
+        <button onclick="calculateRisk()">Calculate</button>
 
-    <p id="moneyAtRisk"></p>
-    <p id="lots"></p>
+        <p id="moneyAtRisk"></p>
+        <p id="lots"></p>
+        <p id="units"></p>
+    </div>
 </body>
 </html>
-
-
